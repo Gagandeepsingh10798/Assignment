@@ -40,13 +40,13 @@
         </div>
         <div class="form-group mb-3" ng-if="application.resume">
             <label>Resume</label>
-            <p><a ng-href="http://localhost:9072/download/{{ application.resume.s3Key }}" target="_blank">{{application.resume.name || application.resume.originalname}}</a><span class="btn btn-danger" ng-click="removeResume()"><i class="fas fa-times"></i></span></p>
+            <p><a ng-href="http://35.207.210.0/download/{{ application.resume.s3Key }}" target="_blank">{{application.resume.name || application.resume.originalname}}</a><span class="btn btn-danger" ng-click="removeResume()"><i class="fas fa-times"></i></span></p>
         </div>
         <div class="form-group mb-3" ng-if="application.existingDocs && application.existingDocs.length">
             <label>Existing Documents</label>
             <ul>
                 <li ng-repeat="doc in application.existingDocs" style="margin-top: 10px;">
-                    <a ng-href="http://localhost:9072/download/{{ doc.s3Key }}" target="_blank">{{ doc.originalname }}</a>
+                    <a ng-href="http://35.207.210.0/download/{{ doc.s3Key }}" target="_blank">{{ doc.originalname }}</a>
                     <span class="btn btn-danger" ng-click="removeDoc(doc)"><i class="fas fa-times"></i></span>
                 </li>
             </ul>
