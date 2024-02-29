@@ -1,0 +1,65 @@
+<div ng-include="'partials/toastNotification.html'"></div>
+<div class="container mt-3 mb-3 ml-100 mr-100">
+    <h2 class="mb-3">Edit Application</h2>
+    <form name="applicationEditForm" novalidate>
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" ng-model="application.name" required minlength="3" maxlength="50">
+            <div class="error-message" ng-show="applicationEditForm.name.$dirty && applicationEditForm.name.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationEditForm.name.$dirty && applicationEditForm.name.$error.minlength">Name must be at least 3 characters.</div>
+            <div class="error-message" ng-show="applicationEditForm.name.$dirty && applicationEditForm.name.$error.maxlength">Name must be less than 50 characters.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" ng-model="application.email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+            <div class="error-message" ng-show="applicationEditForm.email.$dirty && applicationEditForm.email.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationEditForm.email.$dirty && applicationEditForm.email.$error.pattern">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" ng-model="application.phone" required pattern="[0-9]{10}">
+            <div class="error-message" ng-show="applicationEditForm.phone.$dirty && applicationEditForm.phone.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationEditForm.phone.$dirty && applicationEditForm.phone.$error.pattern">Phone must be 10 digits.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob" ng-model="application.dob" required>
+            <div class="error-message" ng-show="applicationEditForm.dob.$dirty && applicationEditForm.dob.$error.required">This field is required.</div>
+        </div>
+        <div ng-repeat="field in ['address', 'city', 'state', 'district', 'country', 'zip']" class="form-group mb-3">
+            <label for="{{field}}">{{field | capitalize}}</label>
+            <input type="text" class="form-control" id="{{field}}" name="{{field}}" ng-model="application.address[field]" required minlength="3">
+            <div class="error-message" ng-show="applicationEditForm[field].$dirty && applicationEditForm[field].$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationEditForm[field].$dirty && applicationEditForm[field].$error.minlength">{{field | capitalize}} must be at least 3 characters.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" ng-model="application.description" required minlength="3"></textarea>
+            <div class="error-message" ng-show="applicationEditForm.description.$dirty && applicationEditForm.description.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationEditForm.description.$dirty && applicationEditForm.description.$error.minlength">Description must be at least 3 characters.</div>
+        </div>
+        <div class="form-group mb-3" ng-if="application.resume">
+            <label>Resume</label>
+            <p><a ng-href="http://localhost:9072/download/{{ application.resume.s3Key }}" target="_blank">{{application.resume.name || application.resume.originalname}}</a><span class="btn btn-danger" ng-click="removeResume()"><i class="fas fa-times"></i></span></p>
+        </div>
+        <div class="form-group mb-3" ng-if="application.existingDocs && application.existingDocs.length">
+            <label>Existing Documents</label>
+            <ul>
+                <li ng-repeat="doc in application.existingDocs" style="margin-top: 10px;">
+                    <a ng-href="http://localhost:9072/download/{{ doc.s3Key }}" target="_blank">{{ doc.originalname }}</a>
+                    <span class="btn btn-danger" ng-click="removeDoc(doc)"><i class="fas fa-times"></i></span>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group mb-3" ng-if="!application.resume">
+            <label for="newResume">Resume (optional)</label>
+            <input type="file" class="form-control" id="newResume" name="newResume" onchange="angular.element(this).scope().setNewResume(this)">
+        </div>
+        <div class="form-group mb-3">
+            <label for="newDocs">New Documents (optional)</label>
+            <input type="file" class="form-control" id="newDocs" name="newDocs" multiple onchange="angular.element(this).scope().setNewDocs(this)">
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="submitApplication()" ng-disabled="applicationEditForm.$invalid">Submit</button>
+        <button type="button" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    </form>
+</div>

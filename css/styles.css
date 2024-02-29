@@ -1,0 +1,100 @@
+/* styles.css */
+body, html {
+    min-height: 100vh;
+    margin: 0;
+}
+
+.containerss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    min-height: 100vh;
+}
+
+
+.form-login {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+.input-group-text {
+    background-color: #ffffff;
+}
+
+.form-control {
+    border-radius: 4px;
+}
+
+/* Adjusts the form-control focus color */
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.toast-success .toast-header {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.toast-error .toast-header {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+    font-size: 0.875em;
+}
+.form-control-sm {
+    margin-top: 0.5rem;
+}
+.containeradd {
+    max-width: 800px;
+}
+.form-shadow {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.table th, .table td {
+    max-width: 150px; /* Adjust based on your preference */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.btn-danger i {
+    color: white; /* Adjust the color as needed */
+}
+.btn-danger {
+    padding: 5px; /* Reduce padding */
+    margin-left: 10px; /* Add some margin if needed */
+    border-radius: 50%; /* Make it round */
+    background-color: #dc3545; /* Bootstrap red */
+}
+
+

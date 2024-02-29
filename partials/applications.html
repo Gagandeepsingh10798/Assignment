@@ -1,0 +1,91 @@
+<!-- User Details Modal -->
+<div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userDetailsModalLabel">Application Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- User information with better structure and overflow handling -->
+                <div class="user-info">
+                    <p class="mb-2"><strong>Name:</strong> <span class="text-wrap">{{selectedApplication.name}}</span></p>
+                    <p class="mb-2"><strong>Email:</strong> <span class="text-wrap">{{selectedApplication.email}}</span></p>
+                    <p class="mb-2"><strong>Date of Birth:</strong> <span class="text-wrap">{{selectedApplication.dob}}</span></p>
+                    <p class="mb-2"><strong>Phone:</strong> <span class="text-wrap">{{selectedApplication.phone}}</span></p>
+                    <p class="mb-2"><strong>Address:</strong> <span class="text-wrap">{{selectedApplication.address.address}}</span></p>
+                    <p class="mb-2"><strong>City:</strong> <span class="text-wrap">{{selectedApplication.address.city}}</span></p>
+                    <p class="mb-2"><strong>District:</strong> <span class="text-wrap">{{selectedApplication.address.district}}</span></p>
+                    <p class="mb-2"><strong>State:</strong> <span class="text-wrap">{{selectedApplication.address.state}}</span></p>
+                    <p class="mb-2"><strong>Country:</strong> <span class="text-wrap">{{selectedApplication.address.country}}</span></p>
+                    <p class="mb-3"><strong>Description:</strong> <span class="text-wrap">{{selectedApplication.description}}</span></p>
+                </div>
+                <!-- Enhanced Display for Resume and Documents -->
+                <div class="documents">
+                    <p class="mb-2"><strong>Resume:</strong> <a href="http://localhost:9072/download/{{selectedApplication.resume.s3Key}}" ng-if="selectedApplication.resume" download class="ms-2"><i class="fas fa-download"></i> {{selectedApplication.resume.originalname}}</a></p>
+                    <p class="mb-2"><strong>Documents:</strong></p>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="doc in selectedApplication.docs" class="mb-1">
+                            <a href="http://localhost:9072/download/{{doc.s3Key}}" download="{{doc.originalname}}">{{doc.originalname}} <i class="fas fa-download ms-1"></i></a>
+                        </li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between mb-2">
+        <h2>Applications List</h2>
+        <button class="btn btn-secondary" ng-click="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4 offset-md-8 d-flex">
+            <div class="input-group me-2">
+                <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search applications..." ng-model="searchText"
+                    aria-label="Search" aria-describedby="basic-addon2">
+            </div>
+            <button class="btn btn-primary" ng-click="goToAddApplication()">Add New</button>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-truncate">Name</th>
+                <th scope="col" class="text-truncate">Email</th>
+                <th scope="col" class="text-truncate">Phone</th>
+                <th scope="col" class="text-truncate">Address</th>
+                <th scope="col" class="text-truncate">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="application in applications | filter:searchText">
+                <td class="text-truncate" ng-click="edit(application._id)" bs-tooltip="{{application.name}}"
+                    tooltip-append-to-body="true">{{ application.name }}</td>
+                <td class="text-truncate" bs-tooltip="{{application.email}}" tooltip-append-to-body="true">{{
+                    application.email }}</td>
+                <td class="text-truncate" bs-tooltip="{{application.phone}}" tooltip-append-to-body="true">{{
+                    application.phone }}</td>
+                <td class="text-truncate" bs-tooltip="{{tooltipContent(application.address)}}" tooltip-append-to-body="true">{{
+                    tooltipContent(application.address) }}</td>
+                <td class="text-truncate" bs-tooltip="{{application.description}}" tooltip-append-to-body="true">{{
+                    application.description }}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" ng-click="openUserDetailsModal(application)">View</button>
+                    <button class="btn btn-danger btn-sm" ng-click="delete(application._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

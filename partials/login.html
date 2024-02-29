@@ -1,0 +1,29 @@
+<div ng-include="'partials/toastNotification.html'"></div>
+<div class="containerss">
+    <div class="row justify-content-center">
+        <form name="loginForm" class="form-login" ng-controller="LoginController" ng-submit="login()">
+            <div class="form-group">
+                <label for="inputEmail">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus
+                    ng-model="user.email" ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/">
+                <small class="form-text text-muted" ng-show="loginForm.email.$error.pattern && loginForm.email.$dirty">Please enter a valid email.</small>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <div class="input-group">
+                    <input type="{{inputType}}" id="inputPassword" class="form-control" placeholder="Password" required
+                        ng-model="user.password">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i ng-click="toggleVisibility()"
+                                ng-class="{'fas fa-eye': inputType == 'password', 'fas fa-eye-slash': inputType == 'text'}"></i>
+                        </span>
+                    </div>
+                </div>
+                <small class="form-text text-muted"
+                    ng-show="loginForm.password.$error.required && loginForm.password.$dirty">Password is required.</small>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
+        </form>
+    </div>
+</div>

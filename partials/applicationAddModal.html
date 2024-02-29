@@ -1,0 +1,53 @@
+<div ng-include="'partials/toastNotification.html'"></div>
+<div class="container mt-3 mb-3 ml-100 mr-100">
+    <h2 class="mb-3">Add Application</h2>
+    <form name="applicationAddForm" novalidate>
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" ng-model="application.name" required minlength="3" maxlength="50">
+            <div class="error-message" ng-show="applicationAddForm.name.$dirty && applicationAddForm.name.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationAddForm.name.$dirty && applicationAddForm.name.$error.minlength">Name must be at least 3 characters.</div>
+            <div class="error-message" ng-show="applicationAddForm.name.$dirty && applicationAddForm.name.$error.maxlength">Name must be less than 50 characters.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" ng-model="application.email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+            <div class="error-message" ng-show="applicationAddForm.email.$dirty && applicationAddForm.email.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationAddForm.email.$dirty && applicationAddForm.email.$error.pattern">Please enter a valid email address.</div>
+        </div>        
+        <div class="form-group mb-3">
+            <label for="phone">Phone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" ng-model="application.phone" required pattern="[0-9]{10}">
+            <div class="error-message" ng-show="applicationAddForm.phone.$dirty && applicationAddForm.phone.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationAddForm.phone.$dirty && applicationAddForm.phone.$error.pattern">Phone must be 10 digits.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob" ng-model="application.dob" required>
+            <div class="error-message" ng-show="applicationAddForm.dob.$dirty && applicationAddForm.dob.$error.required">This field is required.</div>
+        </div>
+        <div ng-repeat="field in ['address', 'city', 'state', 'district', 'country', 'zip']" class="form-group mb-3">
+            <label for="{{field}}">{{field | capitalize}}</label>
+            <input type="text" class="form-control" id="{{field}}" name="{{field}}" ng-model="application.address[field]" required minlength="3">
+            <div class="error-message" ng-show="applicationAddForm[field].$dirty && applicationAddForm[field].$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationAddForm[field].$dirty && applicationAddForm[field].$error.minlength">{{field | capitalize}} must be at least 3 characters.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="resume">Resume</label>
+            <input type="file" class="form-control" id="resume" name="resume" required onchange="angular.element(this).scope().setFile(this)">
+            <div class="error-message" ng-show="applicationAddForm.resume.$dirty && applicationAddForm.resume.$error.required">This field is required.</div>
+        </div>
+        <div class="form-group mb-3">
+            <label for="extra">Extra (optional)</label>
+            <input type="file" class="form-control" id="extra" name="extra" multiple onchange="angular.element(this).scope().setFiles(this)">
+        </div>
+        <div class="form-group mb-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" ng-model="application.description" required minlength="3"></textarea>
+            <div class="error-message" ng-show="applicationAddForm.description.$dirty && applicationAddForm.description.$error.required">This field is required.</div>
+            <div class="error-message" ng-show="applicationAddForm.description.$dirty && applicationAddForm.description.$error.minlength">Description must be at least 3 characters.</div>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="submitApplication()" ng-disabled="applicationAddForm.$invalid">Submit</button>
+        <button type="submit" class="btn btn-danger"  ng-click="cancel()">Cancel</button>
+    </form>
+</div>
