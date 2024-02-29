@@ -1,4 +1,4 @@
-angular.module('myApp').controller('ApplicationListingController', ['$scope', '$location', 'ApplicationService', function($scope, $location, ApplicationService) {
+angular.module('myApp').controller('ApplicationListingController', ['$scope', '$location', 'ApplicationService', function ($scope, $location, ApplicationService) {
     if (!localStorage.getItem('token') || !localStorage.getItem('refreshToken')) {
         $location.path('/login');
     }
@@ -7,17 +7,17 @@ angular.module('myApp').controller('ApplicationListingController', ['$scope', '$
     $scope.selectedApplication = {};
 
 
-    $scope.goToAddApplication = function() {
+    $scope.goToAddApplication = function () {
         $location.path('/applicationadd');
     };
 
-    ApplicationService.getAll().then(function(response) {
+    ApplicationService.getAll().then(function (response) {
         $scope.applications = response.data.result;
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.error('Error fetching applications:', error);
     });
 
-    $scope.openUserDetailsModal = function(user) {
+    $scope.openUserDetailsModal = function (user) {
         $scope.selectedApplication = user;
         var userDetailsModal = new bootstrap.Modal(document.getElementById('userDetailsModal'), {
             keyboard: false
@@ -30,9 +30,9 @@ angular.module('myApp').controller('ApplicationListingController', ['$scope', '$
     }
 
     $scope.delete = function (id) {
-        ApplicationService.delete(id).then(function(response) {
+        ApplicationService.delete(id).then(function (response) {
             refreshApplications();
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error('Error deleting application:', error);
         });
     }
@@ -44,14 +44,14 @@ angular.module('myApp').controller('ApplicationListingController', ['$scope', '$
     }
 
     function refreshApplications() {
-        ApplicationService.getAll().then(function(response) {
+        ApplicationService.getAll().then(function (response) {
             $scope.applications = response.data.result;
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error('Error fetching applications:', error);
         });
     }
 
-    $scope.tooltipContent = function(address) {
+    $scope.tooltipContent = function (address) {
         let content = '';
         if (address) {
             content += address.address ? address.address + ', ' : '';
@@ -63,5 +63,15 @@ angular.module('myApp').controller('ApplicationListingController', ['$scope', '$
         }
         return content;
     };
+
+    $scope.formatDob = function (dateString) {
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+        return formattedDate
+    }
 
 }]);
